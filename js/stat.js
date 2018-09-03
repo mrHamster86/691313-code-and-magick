@@ -1,41 +1,34 @@
 'use strict';
 
-
-var CLOUD = {
+var cloud = {
   height: 270,
   width: 420,
   positionX: 100,
   positionY: 10,
+  gap: 15,
+  color: 'white',
+  stroke: true,
+  strokeColor: 'black',
   shadowOffset: 10,
-  gap: 15
+  shadowColor: 'rgba(0, 0, 0, 0.7)'
 };
-var CLOUD_TITLE = {
-  positionX: CLOUD.positionX + CLOUD.gap,
-  positionY: CLOUD.positionY + CLOUD.gap
+var cloudTitle = {
+  positionX: cloud.positionX + cloud.gap,
+  positionY: cloud.positionY + cloud.gap,
+  textColor: 'black',
+  font: '16px PT Mono',
+  textGap: 20
 };
-var CHART = {
-  positionX: CLOUD.positionX + CLOUD.gap * 2,
-  positionY: CLOUD.height - CLOUD.gap,
+var chart = {
+  positionX: cloud.positionX + cloud.gap * 2,
+  positionY: cloud.height - cloud.gap,
   heightColumn: 150,
   widthColumn: 40,
-  offsetColumn: 50
+  offsetColumn: 50,
+  textColor: cloudTitle.textColor
 };
 
-var renderCloud = function (ctx, x, y, color, isStroke) {
-  ctx.fillStyle = color;
-  ctx.fillRect(x, y, CLOUD.width, CLOUD.height);
-  if (isStroke) {
-    ctx.strokeStyle = 'black';
-    ctx.strokeRect(x, y, CLOUD.width, CLOUD.height);
-  }
-};
-var renderTitle = function (ctx, text, x, y) {
-  ctx.fillStyle = 'black';
-  ctx.font = '16px PT Mono';
-  ctx.textBaseline = 'middle';
-  ctx.fillText(text, x, y);
-};
-var maxElementArr = function (arr) {
+var getMaxElement = function (arr) {
   var maxElement = arr[0];
   for (var i = 0; i < arr.length; i++) {
     if (maxElement < arr[i]) {
@@ -44,29 +37,43 @@ var maxElementArr = function (arr) {
   }
   return maxElement;
 };
+
+var renderCloud = function (ctx, x, y, color, isStroke) {
+  ctx.fillStyle = color;
+  ctx.fillRect(x, y, cloud.width, cloud.height);
+  if (isStroke) {
+    ctx.strokeStyle = cloud.strokeColor;
+    ctx.strokeRect(x, y, cloud.width, cloud.height);
+  }
+};
+var renderTitle = function (ctx, text, x, y) {
+  ctx.fillStyle = cloudTitle.textColor;
+  ctx.font = cloudTitle.font;
+  ctx.textBaseline = 'middle';
+  ctx.fillText(text, x, y);
+};
 var renderChart = function (ctx, names, times) {
-  var chartColumn = CHART.widthColumn + CHART.offsetColumn;
-  var maxHeight = maxElementArr(times);
+  var chartColumn = chart.widthColumn + chart.offsetColumn;
+  var maxHeight = getMaxElement(times);
 
   for (var i = 0; i < names.length; i++) {
-    var currentHeight = CHART.heightColumn * times[i] / maxHeight;
+    var currentHeightColumn = chart.heightColumn * times[i] / maxHeight;
 
-    names[i] === 'Вы' ? ctx.fillStyle = 'red' : ctx.fillStyle = 'blue';
-    ctx.fillRect(CHART.positionX  + chartColumn * i, CHART.positionY - CLOUD.gap - currentHeight, CHART.widthColumn, currentHeight);
+    ctx.fillStyle = (names[i] === 'Вы' ? 'red' : 'blue');
+    ctx.fillRect(chart.positionX + chartColumn * i, chart.positionY - cloud.gap - currentHeightColumn, chart.widthColumn, currentHeightColumn);
 
-    ctx.fillStyle = 'black';
-    ctx.fillText(Math.round(times[i]), CHART.positionX + chartColumn * i, CHART.positionY - (CLOUD.gap * 2) - currentHeight);
-    ctx.fillText(names[i], CHART.positionX  + chartColumn * i, CHART.positionY);
-
+    ctx.fillStyle = chart.textColor;
+    ctx.fillText(Math.round(times[i]), chart.positionX + chartColumn * i, chart.positionY - (cloud.gap * 2) - currentHeightColumn);
+    ctx.fillText(names[i], chart.positionX + chartColumn * i, chart.positionY);
   }
 };
 
 window.renderStatistics = function (ctx, names, times) {
-  renderCloud(ctx, CLOUD.positionX + CLOUD.shadowOffset, CLOUD.positionY + CLOUD.shadowOffset, 'rgba(0, 0, 0, 0.7)');
-  renderCloud(ctx, CLOUD.positionX, CLOUD.positionY, 'white', true);
+  renderCloud(ctx, cloud.positionX + cloud.shadowOffset, cloud.positionY + cloud.shadowOffset, cloud.shadowColor);
+  renderCloud(ctx, cloud.positionX, cloud.positionY, cloud.color, cloud.stroke);
 
-  renderTitle(ctx, 'Ура вы победили!', CLOUD_TITLE.positionX, CLOUD_TITLE.positionY);
-  renderTitle(ctx, 'Список результатов:', CLOUD_TITLE.positionX, CLOUD_TITLE.positionY + CLOUD.gap);
+  renderTitle(ctx, 'Ура вы победили!', cloudTitle.positionX, cloudTitle.positionY);
+  renderTitle(ctx, 'Список результатов:', cloudTitle.positionX, cloudTitle.positionY + cloudTitle.textGap);
 
   renderChart(ctx, names, times);
 };
