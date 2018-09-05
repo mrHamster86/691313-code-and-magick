@@ -3,8 +3,10 @@
 var cloud = {
   height: 270,
   width: 420,
-  positionX: 100,
-  positionY: 10,
+  position: {
+    x: 100,
+    y: 10
+  },
   gap: 15,
   color: 'white',
   stroke: true,
@@ -13,15 +15,19 @@ var cloud = {
   shadowColor: 'rgba(0, 0, 0, 0.7)'
 };
 var cloudTitle = {
-  positionX: cloud.positionX + cloud.gap,
-  positionY: cloud.positionY + cloud.gap,
+  position: {
+    x: cloud.position.x + cloud.gap,
+    y: cloud.position.y + cloud.gap
+  },
   textColor: 'black',
   font: '16px PT Mono',
   textGap: 20
 };
 var chart = {
-  positionX: cloud.positionX + cloud.gap * 2,
-  positionY: cloud.height - cloud.gap,
+  position: {
+    x: cloud.position.x + cloud.gap * 2,
+    y: cloud.height - cloud.gap
+  },
   heightColumn: 150,
   widthColumn: 40,
   offsetColumn: 50,
@@ -30,12 +36,16 @@ var chart = {
 
 var getMaxElement = function (arr) {
   var maxElement = arr[0];
-  for (var i = 0; i < arr.length; i++) {
+  for (var i = 1; i < arr.length; i++) {
     if (maxElement < arr[i]) {
       maxElement = arr[i];
     }
   }
   return maxElement;
+};
+var getSaturation = function () {
+	var saturation = Math.round(10 - 0.5 + Math.random() * (100 - 10 + 1));
+	return saturation;
 };
 
 var renderCloud = function (ctx, x, y, color, isStroke) {
@@ -58,22 +68,23 @@ var renderChart = function (ctx, names, times) {
 
   for (var i = 0; i < names.length; i++) {
     var currentHeightColumn = chart.heightColumn * times[i] / maxHeight;
-
-    ctx.fillStyle = (names[i] === 'Вы' ? 'red' : 'blue');
-    ctx.fillRect(chart.positionX + chartColumn * i, chart.positionY - cloud.gap - currentHeightColumn, chart.widthColumn, currentHeightColumn);
+    var randomBlue = 'hsl(240, ' + getSaturation() + '%, 50%)';
+    
+    ctx.fillStyle = (names[i] === 'Вы' ? 'red' : randomBlue);
+    ctx.fillRect(chart.position.x + chartColumn * i, chart.position.y - cloud.gap - currentHeightColumn, chart.widthColumn, currentHeightColumn);
 
     ctx.fillStyle = chart.textColor;
-    ctx.fillText(Math.round(times[i]), chart.positionX + chartColumn * i, chart.positionY - (cloud.gap * 2) - currentHeightColumn);
-    ctx.fillText(names[i], chart.positionX + chartColumn * i, chart.positionY);
+    ctx.fillText(Math.round(times[i]), chart.position.x + chartColumn * i, chart.position.y - (cloud.gap * 2) - currentHeightColumn);
+    ctx.fillText(names[i], chart.position.x + chartColumn * i, chart.position.y);
   }
 };
 
 window.renderStatistics = function (ctx, names, times) {
-  renderCloud(ctx, cloud.positionX + cloud.shadowOffset, cloud.positionY + cloud.shadowOffset, cloud.shadowColor);
-  renderCloud(ctx, cloud.positionX, cloud.positionY, cloud.color, cloud.stroke);
+  renderCloud(ctx, cloud.position.x + cloud.shadowOffset, cloud.position.y + cloud.shadowOffset, cloud.shadowColor);
+  renderCloud(ctx, cloud.position.x, cloud.position.y, cloud.color, cloud.stroke);
 
-  renderTitle(ctx, 'Ура вы победили!', cloudTitle.positionX, cloudTitle.positionY);
-  renderTitle(ctx, 'Список результатов:', cloudTitle.positionX, cloudTitle.positionY + cloudTitle.textGap);
+  renderTitle(ctx, 'Ура вы победили!', cloudTitle.position.x, cloudTitle.position.y);
+  renderTitle(ctx, 'Список результатов:', cloudTitle.position.x, cloudTitle.position.y + cloudTitle.textGap);
 
   renderChart(ctx, names, times);
 };
