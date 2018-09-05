@@ -71,7 +71,7 @@ var renderChart = function (ctx, names, times) {
     var hue = getRandomNumber(230, 250);
     var saturation = getRandomNumber(10, 100);
     var lightness = getRandomNumber(20, 70);
-    var randomBlue = 'hsl(' + hue + ', ' + saturation + '%, ' + lightness +'%)';
+    var randomBlue = 'hsl(' + hue + ', ' + saturation + '%, ' + lightness + '%)';
 
     ctx.fillStyle = (names[i] === 'Вы' ? 'red' : randomBlue);
     ctx.fillRect(chart.position.x + chartColumn * i, chart.position.y - cloud.gap - currentHeightColumn, chart.widthColumn, currentHeightColumn);
