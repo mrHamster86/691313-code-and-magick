@@ -44,8 +44,8 @@ var getMaxElement = function (arr) {
   return maxElement;
 };
 var getSaturation = function () {
-	var saturation = Math.round(10 - 0.5 + Math.random() * (100 - 10 + 1));
-	return saturation;
+  var saturation = Math.round(10 - 0.5 + Math.random() * (100 - 10 + 1));
+  return saturation;
 };
 
 var renderCloud = function (ctx, x, y, color, isStroke) {
@@ -69,7 +69,7 @@ var renderChart = function (ctx, names, times) {
   for (var i = 0; i < names.length; i++) {
     var currentHeightColumn = chart.heightColumn * times[i] / maxHeight;
     var randomBlue = 'hsl(240, ' + getSaturation() + '%, 50%)';
-    
+
     ctx.fillStyle = (names[i] === 'Вы' ? 'red' : randomBlue);
     ctx.fillRect(chart.position.x + chartColumn * i, chart.position.y - cloud.gap - currentHeightColumn, chart.widthColumn, currentHeightColumn);
 
