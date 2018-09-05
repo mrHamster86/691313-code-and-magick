@@ -44,7 +44,9 @@ var getMaxElement = function (arr) {
   return maxElement;
 };
 var getSaturation = function () {
-  var saturation = Math.round(10 - 0.5 + Math.random() * (100 - 10 + 1));
+  var minSaturation = 10;
+  var maxSaturation = 100;
+  var saturation = Math.round(minSaturation - 0.5 + Math.random() * (maxSaturation - minSaturation + 1));
   return saturation;
 };
 
