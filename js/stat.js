@@ -50,13 +50,13 @@ var renderTitle = function (ctx, text, x, y) {
 };
 var renderChart = function (ctx, names, times) {
   var chartColumn = chart.widthColumn + chart.offsetColumn;
-  var maxHeight = getMaxElement(times);
+  var maxHeight = window.getMaxElement(times);
 
   for (var i = 0; i < names.length; i++) {
     var currentHeightColumn = chart.heightColumn * times[i] / maxHeight;
-    var hue = getRandomNumber(230, 250);
-    var saturation = getRandomNumber(10, 100);
-    var lightness = getRandomNumber(20, 70);
+    var hue = window.getRandomNumber(230, 250);
+    var saturation = window.getRandomNumber(10, 100);
+    var lightness = window.getRandomNumber(20, 70);
     var randomBlue = 'hsl(' + hue + ', ' + saturation + '%, ' + lightness + '%)';
 
     ctx.fillStyle = (names[i] === 'Вы' ? 'red' : randomBlue);
