@@ -78,7 +78,7 @@ var getFragmentWizards = function (wizardsList) {
   }
   return fragment;
 };
-console.log(getFragmentWizards(randomWizardsList));
+
 similarWizardsList.appendChild(getFragmentWizards(randomWizardsList));
 userDialog.classList.remove('hidden');
 userDialog.querySelector('.setup-similar').classList.remove('hidden');
