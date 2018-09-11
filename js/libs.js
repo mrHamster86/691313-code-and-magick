@@ -12,3 +12,7 @@ window.getRandomNumber = function (min, max) {
   var randomNumber = Math.round(min - 0.5 + Math.random() * (max - min + 1));
   return randomNumber;
 };
+window.getRandomElement = function (arr) {
+  var randomElement = arr[getRandomNumber (0, arr.length - 1)];
+  return randomElement;
+};
