@@ -41,12 +41,12 @@ var dataWizardsTemplate = {
 var lengthListWizards = 4;
 
 var getRandomWizard = function (dataWizards) {
-  var wizardFirstname = getRandomElement(dataWizards.name.firstname);
-  var wizardSurname = getRandomElement(dataWizards.name.surname);
+  var wizardFirstname = window.getRandomElement(dataWizards.name.firstname);
+  var wizardSurname = window.getRandomElement(dataWizards.name.surname);
   var randomWizard = {
     name: wizardFirstname + ' ' + wizardSurname,
-    coatColor: getRandomElement(dataWizards.coatColor),
-    eyersColor: getRandomElement(dataWizards.eyersColor)
+    coatColor: window.getRandomElement(dataWizards.coatColor),
+    eyersColor: window.getRandomElement(dataWizards.eyersColor)
   };
   return randomWizard;
 };
