@@ -13,6 +13,6 @@ window.getRandomNumber = function (min, max) {
   return randomNumber;
 };
 window.getRandomElement = function (arr) {
-  var randomElement = arr[getRandomNumber (0, arr.length - 1)];
+  var randomElement = arr[window.getRandomNumber (0, arr.length - 1)];
   return randomElement;
 };
