@@ -78,8 +78,38 @@ var getFragmentWizards = function (wizardsList) {
   }
   return fragment;
 };
-
 similarWizardsList.appendChild(getFragmentWizards(randomWizardsList));
-userDialog.classList.remove('hidden');
-userDialog.querySelector('.setup-similar').classList.remove('hidden');
 
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
+
+var setupOpen = document.querySelector('.setup-open');
+var setupClose = userDialog.querySelector('.setup-close');
+
+var onPopupPressEsc = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    onClosePopup();
+  }
+};
+
+var onOpenPopup = function() {
+  userDialog.classList.remove('hidden');
+  document.addEventListener('keydown', onPopupPressEsc);
+};
+var onClosePopup = function() {
+  userDialog.classList.add('hidden');
+  document.removeEventListner('keydown', onPopupPressEsc)
+};
+
+setupOpen.addEventListener('click', onOpenPopup);
+setupOpen.addEventListener('keydown', function(evt) {
+  if (evt.keyCode == ENTER_KEYCODE) {
+    onOpenPopup();
+  }
+});
+setupClose.addEventListener('click', onClosePopup);
+setupClose.addEventListener('keydown', function(evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    onClosePopup();
+  }
+})
